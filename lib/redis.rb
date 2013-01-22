@@ -1568,6 +1568,8 @@ class Redis
     limit = options[:limit]
     args.concat(["LIMIT"] + limit) if limit
 
+    min = 0 if min == "-inf"
+
     synchronize do |client|
       client.call([:zrangebyscore, key, min, max] + args) do |reply|
         if with_scores
